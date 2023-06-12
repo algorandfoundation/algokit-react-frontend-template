@@ -1,14 +1,13 @@
-import { useWallet } from "@txnlab/use-wallet";
+import { useWallet } from '@txnlab/use-wallet'
+import { ellipseAddress } from '../utils/ellipseAddress'
 
 const Account = () => {
-  const { activeAddress, isReady, isActive } = useWallet();
-  return (    
+  const { activeAddress } = useWallet()
+  return (
     <div>
-      <div>Address: {activeAddress}</div>
-      <div>Ready: {!!isReady ? "Yes" : "No"}</div>
-      <div>Active: {!!isActive ? "Yes" : "No"}</div>
+      <div className="text-xl">Address: {ellipseAddress(activeAddress)}</div>
     </div>
-  );
+  )
 }
 
-export default Account;
+export default Account

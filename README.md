@@ -1,1 +1,1 @@
-# algokit-dapp-template
+# algokit-react-frontend-template

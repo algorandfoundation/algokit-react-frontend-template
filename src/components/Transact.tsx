@@ -1,69 +1,88 @@
-import { useWallet } from "@txnlab/use-wallet";
-import { TransactionSignerAccount } from "@algorandfoundation/algokit-utils/types/account";
-import * as algokit from "@algorandfoundation/algokit-utils";
-import { useState } from "react";
-import { AppDetails } from "@algorandfoundation/algokit-utils/types/app-client";
-import { HelloWorldAppClient } from "../contracts/HelloWorldAppClient";
-import { Button, Input, Modal } from "react-daisyui";
+import { useWallet } from '@txnlab/use-wallet'
+import * as algokit from '@algorandfoundation/algokit-utils'
+import { useState } from 'react'
+import algosdk from 'algosdk'
+import { useSnackbar } from 'notistack'
 
 interface TransactInterface {
-  openModal: boolean;
-  setModalState: (value: boolean) => void;
+  openModal: boolean
+  setModalState: (value: boolean) => void
 }
 
 const Transact = ({ openModal, setModalState }: TransactInterface) => {
-  const [hello, setHello] = useState<string | undefined>("");
-  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false)
+  const [receiverAddress, setReceiverAddress] = useState<string>('')
 
-  const algod = algokit.getAlgoClient({
+  const algodClient = algokit.getAlgoClient({
     server: import.meta.env.VITE_ALGOD_NODE_CONFIG_SERVER,
     port: import.meta.env.VITE_ALGOD_NODE_CONFIG_PORT,
     token: import.meta.env.VITE_ALGOD_NODE_CONFIG_TOKEN,
-  });
+  })
 
-  const { signer, activeAddress } = useWallet();
+  const { enqueueSnackbar } = useSnackbar()
 
-  const helloWord = async () => {
-    const indexer = algokit.getAlgoIndexerClient();
-    const appDetails = {
-      resolveBy: "creatorAndName",
-      sender: { signer, addr: activeAddress } as TransactionSignerAccount,
-      creatorAddress: import.meta.env.VITE_CREATOR_ADDRESS,
-      findExistingUsing: indexer,
-    } as AppDetails;
+  const { signer, activeAddress, signTransactions, sendTransactions } = useWallet()
 
-    const appClient = new HelloWorldAppClient(appDetails, algod);
+  const handleSubmitAlgo = async () => {
+    setLoading(true)
 
-    const response = await appClient.hello({ name: message });
-    setHello(response.return);
-  };
+    if (!signer || !activeAddress) {
+      enqueueSnackbar('Please connect wallet first', { variant: 'warning' })
+      return
+    }
+
+    const suggestedParams = await algodClient.getTransactionParams().do()
+
+    const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+      from: activeAddress,
+      to: receiverAddress,
+      amount: 1e6,
+      suggestedParams,
+    })
+
+    const encodedTransaction = algosdk.encodeUnsignedTransaction(transaction)
+
+    const signedTransactions = await signTransactions([encodedTransaction])
+
+    const waitRoundsToConfirm = 4
+
+    try {
+      enqueueSnackbar('Sending transaction...', { variant: 'info' })
+      const { id } = await sendTransactions(signedTransactions, waitRoundsToConfirm)
+      enqueueSnackbar(`Transaction sent: ${id}`, { variant: 'success' })
+      setReceiverAddress('')
+    } catch (e) {
+      enqueueSnackbar('Failed to send transaction', { variant: 'error' })
+    }
+
+    setLoading(false)
+  }
 
   return (
-    <Modal open={openModal}>
-      <Modal.Header className="font-bold">
-        Hello message
-      </Modal.Header>
-
-      <Modal.Body>
-        <div className="flex w-full component-preview p-4 items-center justify-center gap-2 font-sans">
-          <Input onChange={(e) => setMessage(e.target.value)} />
-        </div>
-        <p>{hello}</p>
-      </Modal.Body>
-
-      <Modal.Actions>
-        <Button onClick={helloWord}>Call hello</Button>
-
-        <Button
-          onClick={() => {
-            setModalState(!openModal);
+    <dialog id="transact_modal" className={`modal ${openModal ? 'modal-open' : ''} bg-slate-200`}>
+      <form method="dialog" className="modal-box">
+        <h3 className="font-bold text-lg">Send payment transaction</h3>
+        <br />
+        <input
+          type="text"
+          placeholder="Provide wallet address"
+          className="input input-bordered w-full"
+          value={receiverAddress}
+          onChange={(e) => {
+            setReceiverAddress(e.target.value)
           }}
-        >
-          Close
-        </Button>
-      </Modal.Actions>
-    </Modal>
-  );
-};
+        />
+        <div className="modal-action">
+          <button className="btn" onClick={() => setModalState(!openModal)}>
+            Close
+          </button>
+          <button className={`btn ${receiverAddress.length === 58 ? '' : 'btn-disabled'} lo`} onClick={handleSubmitAlgo}>
+            {loading ? <span className="loading loading-spinner" /> : 'Send 1 Algo'}
+          </button>
+        </div>
+      </form>
+    </dialog>
+  )
+}
 
-export default Transact;
+export default Transact
