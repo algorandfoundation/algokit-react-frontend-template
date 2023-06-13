@@ -21,6 +21,7 @@ DEFAULT_PARAMETERS = {
 config_path = Path(__file__).parent.parent / "pyproject.toml"
 NPM_INSTALL_ARGS = ["npm", "install"]
 NPM_LINT_ARGS = ["npm", "run", "lint:fix"]
+NPM_BUILD_ARGS = ["npm", "run", "build"]
 
 
 @pytest.fixture(autouse=True, scope="module")
@@ -103,7 +104,7 @@ def run_init(
     content = src_path_pattern.sub("_src_path: <src>", content)
     copier_answers.write_text(content, "utf-8")
 
-    for check_args in [NPM_INSTALL_ARGS, NPM_LINT_ARGS]:
+    for check_args in [NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS]:
         result = subprocess.run(
             check_args,
             stdout=subprocess.PIPE,

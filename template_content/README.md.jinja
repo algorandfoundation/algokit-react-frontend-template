@@ -62,21 +62,12 @@ This project makes use of Python to build Algorand smart contracts. The followin
 - [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts) - Various TypeScript utilities to simplify interactions with Algorand and AlgoKit.
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
-{% if use_daisy_ui %}
-- [daisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
-{% endif %}
-{% if use_wallet %}
-- [use-wallet](https://github.com/txnlab/use-wallet) - A React hook for connecting to an Algorand wallet providers. Includes integrations with [Exodus](https://www.exodus.com/), [Pera](https://perawallet.app/), and [Defly](https://defly.app/).
-{% endif %}
-- [npm](https://www.npmjs.com/): Node.js package manager
-{% if use_jest %}
-- [jest](https://jestjs.io/): JavaScript testing framework
-{% endif %}
-{% if use_playwright %}
-- [playwright](https://playwright.dev/): Browser automation library
-{% endif %}
-{% if use_github_actions %}
-- Github Actions workflows for build validation
+{% if use_daisy_ui %}- [daisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
+{% endif %}{% if use_wallet %}- [use-wallet](https://github.com/txnlab/use-wallet) - A React hook for connecting to an Algorand wallet providers. Includes integrations with [Exodus](https://www.exodus.com/), [Pera](https://perawallet.app/), and [Defly](https://defly.app/).
+{% endif %}- [npm](https://www.npmjs.com/): Node.js package manager
+{% if use_jest %}- [jest](https://jestjs.io/): JavaScript testing framework
+{% endif %}{% if use_playwright %}- [playwright](https://playwright.dev/): Browser automation library
+{% endif %}{% if use_github_actions %}- Github Actions workflows for build validation
 {% endif %}
 
 {% if ide_vscode %}
