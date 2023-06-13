@@ -4,8 +4,10 @@ module.exports = {
   theme: {
     extend: {},
   },
+  {% if use_daisy_ui -%}
   daisyui: {
     themes: ['lofi'],
   },
   plugins: [require('daisyui')],
+  {% endif -%}
 }

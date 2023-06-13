@@ -22,7 +22,14 @@
     "jsx": "react-jsx",
     "outDir": "./dist/"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.js"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "vite.config.js",
+    "src/components/ConnectWallet.tsx'",
+    "src/components/ConnectWallet.tsx'",
+    "src/components/Transact.tsx"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

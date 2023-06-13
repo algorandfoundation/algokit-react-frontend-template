@@ -1,6 +1,10 @@
 {
-  "name": "my-app",
+  "name": "{{ project_name }}",
   "version": "0.1.0",
+  "author": {
+    "name": "{{ author_name }}",
+    "email": "{{ author_email }}"
+  },
   "private": true,
   "devDependencies": {
     "@types/jest": "27.5.2",
@@ -33,7 +37,9 @@
     "@walletconnect/client": "1.8.0",
     "algorand-walletconnect-qrcode-modal": "1.8.0",
     "algosdk": "2.3.0",
+    {% if use_daisy_ui -%}
     "daisyui": "3.1.0",
+    {% endif -%}
     "notistack": "3.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -45,6 +51,7 @@
     "test": "jest --coverage --passWithNoTests",
     "playwright:test": "playwright test",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview"
   },
   "eslintConfig": {
