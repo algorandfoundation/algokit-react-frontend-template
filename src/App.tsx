@@ -39,12 +39,17 @@ export default function App() {
               </p>
 
               <div className="grid">
-                <a className="btn btn-primary m-2" target="_blank" href="https://github.com/algorandfoundation/algokit-cli">
+                <a
+                  data-test-id="getting-started"
+                  className="btn btn-primary m-2"
+                  target="_blank"
+                  href="https://github.com/algorandfoundation/algokit-cli"
+                >
                   Getting started
                 </a>
 
                 <div className="divider" />
-                <button className="btn m-2" onClick={toggleWalletModal}>
+                <button data-test-id="connect-wallet" className="btn m-2" onClick={toggleWalletModal}>
                   Wallet Connection
                 </button>
 
