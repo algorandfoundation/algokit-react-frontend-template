@@ -1,67 +1,68 @@
-import { useWallet } from "@txnlab/use-wallet";
-import { useEffect } from "react";
-import { Button, Modal } from "react-daisyui";
-import Account from "./Account";
+import { useWallet } from '@txnlab/use-wallet'
+import Account from './Account'
 
 interface ConnectWalletInterface {
-  openModal: boolean;
-  closeModal: () => void;
+  openModal: boolean
+  closeModal: () => void
 }
 
 const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
-  const { providers, activeAddress } = useWallet();
-
-  useEffect(() => {
-    (async () => {
-      await Promise.all((providers ?? []).map(async (p) => p.reconnect()));
-    })();
-  }, [providers]);
+  const { providers, activeAddress } = useWallet()
 
   return (
-    <Modal open={openModal}>
-      <Modal.Header className="font-bold">
-        Select the wallet that you will use to sign your transactions.
-      </Modal.Header>
+    <dialog id="connect_wallet_modal" className={`modal ${openModal ? 'modal-open' : ''}`}>
+      <form method="dialog" className="modal-box">
+        <h3 className="font-bold text-2xl">Select wallet provider</h3>
 
-      <Modal.Body>
-        {providers?.map((provider) => (
-          <Button
-            key={`provider-${provider.metadata.id}`}
-            color="primary"
+        <div className="grid m-2 pt-5">
+          {activeAddress && (
+            <>
+              <Account />
+              <div className="divider" />
+            </>
+          )}
+
+          {!activeAddress &&
+            providers?.map((provider) => (
+              <button
+                className="btn border-teal-800 border-1  m-2"
+                key={`provider-${provider.metadata.id}`}
+                onClick={() => {
+                  return provider.connect()
+                }}
+              >
+                <img
+                  alt={`wallet_icon_${provider.metadata.id}`}
+                  src={provider.metadata.icon}
+                  style={{ objectFit: 'contain', width: '30px', height: 'auto' }}
+                />
+                <span>{provider.metadata.name}</span>
+              </button>
+            ))}
+        </div>
+
+        <div className="modal-action">
+          <button
+            className="btn"
             onClick={() => {
-              return provider.isConnected
-                ? provider.setActiveProvider()
-                : provider.connect();
+              closeModal()
             }}
           >
-            <img width={30} height={30} alt="" src={provider.metadata.icon} />
-            <span>{provider.metadata.name}</span>
-          </Button>
-        ))}
-
-        <Account />
-      </Modal.Body>
-
-      <Modal.Actions>
-        {(activeAddress || providers?.find((p) => p.isActive)) && (
-          <Button
-            onClick={() => {
-              providers?.find((p) => p.isActive)?.disconnect();
-            }}
-          >
-            Disconnect
-          </Button>
-        )}
-
-        <Button
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          Close
-        </Button>
-      </Modal.Actions>
-    </Modal>
-  );
-};
-export default ConnectWallet;
+            Close
+          </button>
+          {activeAddress && (
+            <button
+              className="btn btn-warning"
+              onClick={() => {
+                providers?.find((p) => p.isActive)?.disconnect()
+              }}
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      </form>
+    </dialog>
+  )
+}
+export default ConnectWallet
