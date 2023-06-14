@@ -59,7 +59,7 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
   }
 
   return (
-    <dialog id="transact_modal" className={`modal ${openModal ? 'modal-open' : ''} bg-slate-200`}{% if use_daisy_ui == false -%} style={{ '{{' }} display: openModal ? 'block' : 'none' {{ '}}' }}{% endif -%}>
+    <dialog id="transact_modal" className={`modal ${openModal ? 'modal-open' : ''} bg-slate-200`}>
       <form method="dialog" className="modal-box">
         <h3 className="font-bold text-lg">Send payment transaction</h3>
         <br />
@@ -72,7 +72,7 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
             setReceiverAddress(e.target.value)
           }}
         />
-        <div className="modal-action {% if use_daisy_ui == false -%}grid{% endif -%}">
+        <div className="modal-action ">
           <button className="btn" onClick={() => setModalState(!openModal)}>
             Close
           </button>

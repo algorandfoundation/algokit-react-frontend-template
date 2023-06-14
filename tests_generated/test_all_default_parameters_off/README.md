@@ -1,4 +1,4 @@
-# {{ project_name }}
+# test_all_default_parameters_off
 
 This starter React project has been generated using AlgoKit. See below for default getting started instructions.
 
@@ -24,19 +24,7 @@ This starter React project has been generated using AlgoKit. See below for defau
 1. If you update to the latest source code and there are new dependencies you will need to run `algokit bootstrap all` again
 2. Follow step 3 above
 
-{% if use_github_actions -%}
 
-### Continuous Integration
-
-This project uses [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to define CI workflows, which are located in the [`.github/workflows`](./.github/workflows) folder.
-
-For pull requests and pushes to `main` branch against this repository the following checks are automatically performed by GitHub Actions:
-
-- `install`: Installs dependencies using `npm`
-- `lint`: Lints the codebase using `ESLint`
-- `build`: Builds the codebase using `vite`
-
-{% endif -%}
 
 # Tools
 
@@ -44,28 +32,11 @@ This project makes use of React and Tailwind to provider a base project configur
 
 - [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts) - Various TypeScript utilities to simplify interactions with Algorand and AlgoKit.
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
-{% if use_tailwind -%}
-- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for rapidly building custom designs.
-{% endif -%}{% if use_daisy_ui -%}
-- [daisyUI](https://daisyui.com/) - A component library for Tailwind CSS.
-{% endif -%}{% if use_wallet -%}
-- [use-wallet](https://github.com/txnlab/use-wallet) - A React hook for connecting to an Algorand wallet providers. Includes integrations with [Exodus](https://www.exodus.com/), [Pera](https://perawallet.app/), and [Defly](https://defly.app/).
-{% endif -%}- [npm](https://www.npmjs.com/): Node.js package manager
-{% if use_jest -%}
-- [jest](https://jestjs.io/): JavaScript testing framework
-{% endif -%}{% if use_playwright -%}
-- [playwright](https://playwright.dev/): Browser automation library
-{% endif -%}{% if use_eslint_prettier -%}
-- [Prettier](https://prettier.io/): Opinionated code formatter
-- [ESLint](https://eslint.org/): Tool for identifying and reporting on patterns in JavaScript
-{% endif -%}{% if use_github_actions -%}
-- Github Actions workflows for build validation
-{% endif -%}
+- [npm](https://www.npmjs.com/): Node.js package manager
 
 
-{% if ide_vscode -%}
-It has also been configured to have a productive dev experience out of the box in [VS Code](https://code.visualstudio.com/), see the [.vscode](./.vscode) folder.
-{% endif -%}
+
+
 
 # Integrating with smart contracts and application clients
 

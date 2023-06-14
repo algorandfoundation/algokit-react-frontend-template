@@ -1,8 +1,8 @@
-# AlgoKit React Starter Template
+# AlgoKit React Template
 
 This template provides a baseline React web app for developing integrating with any [ARC32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) compliant Algorand smart contracts.
 
-To use it [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t react_starter` to `algokit init` or select the `react_starter` template interactively during `algokit init`.
+To use it [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t react` to `algokit init` or select the `react` template interactively during `algokit init`.
 
 This is one of the official frontend templates used by AlgoKit to initialise an Algorand enabled React web app ready for integrating with your smart contracts. It's made by relying on a [Copier templates](https://copier.readthedocs.io/en/stable/).
 

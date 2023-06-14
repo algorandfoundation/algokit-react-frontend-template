@@ -22,10 +22,21 @@ ide_vscode:
     help: Do you want to add VSCode configuration?
     default: yes
 
+use_eslint_prettier:
+    type: bool
+    help: Do you want to use ESLint and Prettier for code linting and formatting?
+    default: yes
+
+use_tailwind:
+    type: bool
+    help: Do you want to use Tailwind CSS? A utility-first CSS framework for rapidly building custom designs.
+    default: yes
+
 use_daisy_ui:
     type: bool
     help: Do you want to use a daisyUI? Framework agnostic CSS component library for building modern websites and web applications fast.
     default: yes
+    when: "{{ use_tailwind != false }}"
 
 use_jest:
     type: bool
