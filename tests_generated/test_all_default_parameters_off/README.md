@@ -24,8 +24,6 @@ This starter React project has been generated using AlgoKit. See below for defau
 1. If you update to the latest source code and there are new dependencies you will need to run `algokit bootstrap all` again
 2. Follow step 3 above
 
-
-
 # Tools
 
 This project makes use of React and Tailwind to provider a base project configuration to develop frontends for your Algorand dApps and interactions with smart contracts. The following tools are in use:
@@ -33,11 +31,6 @@ This project makes use of React and Tailwind to provider a base project configur
 - [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts) - Various TypeScript utilities to simplify interactions with Algorand and AlgoKit.
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
 - [npm](https://www.npmjs.com/): Node.js package manager
-
-
-
-
-
 # Integrating with smart contracts and application clients
 
 Refer to the detailed guidance on [integrating with smart contracts and application clients](./src/contracts/README.md). In essence, for any smart contract codebase generated with AlgoKit or ther tools that produce compile contracts into ARC34 compliant app specifications, you can use the `algokit generate` command to generate TypeScript or Python typed client. Once generated simply drag and drop the generated client into `./src/contracts` and import it into your React components as you see fit.
