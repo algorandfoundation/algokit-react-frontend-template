@@ -1,22 +1,22 @@
-import { WalletProvider, useWallet } from "@txnlab/use-wallet";
-import { SnackbarProvider } from "notistack";
-import { useState } from "react";
-import ConnectWallet from "./components/ConnectWallet";
-import Transact from "./components/Transact";
-import { useAlgoWallet } from "./hooks/useAlgoWalletProvider";
+import { WalletProvider, useWallet } from '@txnlab/use-wallet'
+import { SnackbarProvider } from 'notistack'
+import { useState } from 'react'
+import ConnectWallet from './components/ConnectWallet'
+import Transact from './components/Transact'
+import { useAlgoWallet } from './hooks/useAlgoWalletProvider'
 
 export default function App() {
-  const [openWalletModal, setOpenWalletModal] = useState<boolean>(false);
-  const [openDemoModal, setOpenDemoModal] = useState<boolean>(false);
-  const { activeAddress } = useWallet();
+  const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
+  const [openDemoModal, setOpenDemoModal] = useState<boolean>(false)
+  const { activeAddress } = useWallet()
 
   const toggleWalletModal = () => {
-    setOpenWalletModal(!openWalletModal);
-  };
+    setOpenWalletModal(!openWalletModal)
+  }
 
   const toggleDemoModal = () => {
-    setOpenDemoModal(!openDemoModal);
-  };
+    setOpenDemoModal(!openDemoModal)
+  }
 
   const walletProviders = useAlgoWallet({
     nodeToken: import.meta.env.VITE_ALGOD_NODE_CONFIG_TOKEN,
@@ -24,7 +24,7 @@ export default function App() {
     nodePort: import.meta.env.VITE_ALGOD_NODE_CONFIG_PORT,
     network: import.meta.env.VITE_ALGOD_NETWORK,
     autoConnect: true,
-  });
+  })
 
   return (
     <SnackbarProvider maxSnack={3}>
@@ -68,5 +68,5 @@ export default function App() {
         </div>
       </WalletProvider>
     </SnackbarProvider>
-  );
+  )
 }
