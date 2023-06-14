@@ -3,6 +3,6 @@ name: Pull Request validation
 on: [pull_request]
 
 jobs:
-    pr-check:
-        name: Check Python
-        uses: ./.github/workflows/check-python.yaml
+  pr-check:
+    name: Check Python
+    uses: ./.github/workflows/check-python.yaml
