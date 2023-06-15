@@ -3,10 +3,10 @@
 </div>
 
 <p align="center">
-    <a target="_blank" href="https://developer.algorand.org/algokit/">
+    <a target="_blank" href="https://github.com/algorandfoundation/algokit-cli">
       <img src="https://img.shields.io/badge/docs-repository-00dc94?logo=github&style=flat.svg" />
     </a>
-    <a target="_blank" href="https://github.com/algorandfoundation/algokit-cli">
+    <a target="_blank" href="https://developer.algorand.org/algokit/">
       <img src="https://img.shields.io/badge/learn-AlgoKit-00dc94?logo=algorand&mac=flat.svg" />
     </a>
     <a target="_blank" href="https://github.com/algorandfoundation/algokit-react-frontend-template">
