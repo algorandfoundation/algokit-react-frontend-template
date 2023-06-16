@@ -1,7 +1,13 @@
 _subdirectory: template_content
 
 _tasks:
-  - "{% if cloud_provider == 'Netlify' %} npx netlify init {% elif cloud_provider == 'Vercel' %} npx vercel link {% else %} echo Skipping continuous deployment setup... {% endif %}"
+  - "{% if cloud_provider == 'netlify' -%}
+      npx netlify init
+     {% elif cloud_provider == 'vercel' -%}
+      npx vercel link
+     {% else -%}
+      echo Skipping continuous deployment setup...
+     {% endif -%}"
 
 # questions
 # project_name should never get prompted, AlgoKit should always pass it by convention
@@ -56,18 +62,14 @@ use_github_actions:
     help: Do you want to include Github Actions workflows for build validation?
     default: yes
 
-use_deploy:
-    type: bool
-    help: Do you want to configure serverless cloud provider and hosting your web app?
-    default: yes
-
 cloud_provider:
     type: str
-    help: Pick a website hosting provider
-    when: "{{ use_deploy != false }}"
+    help: Would you like to pick a website hosting provider
     choices:
-        - Netlify
-        - Vercel
+        Netlify: "netlify"
+        Vercel: "vercel"
+        No thanks: "none"
+    default: "none"
 
 # The following should never get prompted; algokit should always pass these values through by convention
 
