@@ -36,7 +36,7 @@ This template supports the following features:
 - Integration with [use-wallet](https://github.com/txnlab/use-wallet) for connecting to Algorand wallets such as Pera, Defly and Exodus.
 - Example of performing a transaction.
 - Dotenv support for environment variables, as well as a local only KMD provider that can be used for connecting the frontend component to an `algokit localnet` instance (docker required).
-- CI pipeline using GitHub Actions (CD to be defined later)
+- CI/CD pipeline using GitHub Actions (Vercel or Netlify for hosting)
 
 # Getting started
 

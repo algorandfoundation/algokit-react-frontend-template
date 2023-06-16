@@ -34,6 +34,12 @@ For pull requests and pushes to `main` branch against this repository the follow
 - `lint`: Lints the codebase using `ESLint`
 - `build`: Builds the codebase using `vite`
 
+### Continuous Deployment
+
+The project template provides base Github Actions workflows for continuous deployment to [Netlify](https://www.netlify.com/) or [Vercel](https://vercel.com/). These workflows are located in the [`.github/workflows`](./.github/workflows) folder.
+
+> Please note: when configuring the github repository for the first time. Depending on selected provider you will need to set the provider secrets in the repository settings. For netlify you can pass the project specific environment variables as part of Github actions secrets, while for vercel you will need to set the secrets on your site instance (refer to the [Vercel documentation](https://vercel.com/docs/cli#commands/secrets) for more details).
+
 # Tools
 
 This project makes use of React and Tailwind to provider a base project configuration to develop frontends for your Algorand dApps and interactions with smart contracts. The following tools are in use:

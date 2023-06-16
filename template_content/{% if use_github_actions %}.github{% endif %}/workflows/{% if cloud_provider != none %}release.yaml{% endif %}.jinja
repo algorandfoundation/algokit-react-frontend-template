@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".vscode/**"
+      - ".idea/**"
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  lint-and-build:
+    name: CI Dapp
+    uses: ./.github/workflows/checks.yml
+    steps:
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to
+    environment: Prod
+    concurrency: {% raw %}"${{ github.workflow }}-prod"{% endraw %}
+    needs:
+      - lint-and-build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+
+{%- if cloud_provider == 'vercel' %}
+  {% raw %}
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        # Set your vercel project env variables on your site instance on https://vercel.com/dashboard
+  {% endraw %}
+{%- else %}
+  {% raw %}
+      - name: Install netlify cli
+        run: npm i netlify-cli
+
+      - name: Publish to netlify
+        run: netlify deploy --prod --dir "dist"
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+          # Pass your environment variables here, e.g.,
+          # VITE_ALGOD_NODE_CONFIG_TOKEN: ${{ secrets.VITE_ALGOD_NODE_CONFIG_TOKEN }}
+          # VITE_ALGOD_NODE_CONFIG_SERVER: ${{ secrets.VITE_ALGOD_NODE_CONFIG_SERVER }}
+          # VITE_ALGOD_NODE_CONFIG_PORT: ${{ secrets.VITE_ALGOD_NODE_CONFIG_PORT }}
+
+          # VITE_INDEXER_TOKEN: ${{ secrets.VITE_INDEXER_TOKEN }}
+          # VITE_INDEXER_SERVER: ${{ secrets.VITE_INDEXER_SERVER }}
+          # VITE_INDEXER_PORT: ${{ secrets.VITE_INDEXER_PORT }}
+
+          # VITE_ALGOD_NETWORK: ${{ secrets.VITE_ALGOD_NETWORK }}
+  {% endraw %}
+{%- endif %}
