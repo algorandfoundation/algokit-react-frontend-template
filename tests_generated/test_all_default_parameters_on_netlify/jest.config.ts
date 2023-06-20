@@ -14,9 +14,7 @@ const config: Config.InitialOptions = {
     ],
   },
   coveragePathIgnorePatterns: ['tests'],
-  {% if use_playwright -%}
   testPathIgnorePatterns: ['/tests/'],
-  {% endif -%}
-}
+  }
 
 export default config

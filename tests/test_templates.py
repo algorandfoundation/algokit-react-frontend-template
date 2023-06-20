@@ -21,7 +21,7 @@ NPM_BUILD_ARGS = ["npm", "run", "build"]
 
 
 def _generate_default_parameters(
-    default_state: str = "yes",
+    default_state: str = "yes", cloud_provider: str = "none"
 ) -> dict[str, str]:
     return {
         "author_name": "None",
@@ -33,6 +33,7 @@ def _generate_default_parameters(
         "use_jest": default_state,
         "use_playwright": default_state,
         "use_github_actions": default_state,
+        "cloud_provider": cloud_provider,
     }
 
 
@@ -138,11 +139,22 @@ def run_init(
     return result
 
 
-def test_all_default_parameters_on(working_dir: Path) -> None:
+def test_all_default_parameters_on_vercel(working_dir: Path) -> None:
     response = run_init(
         working_dir,
-        "test_all_default_parameters_on",
-        answers=_generate_default_parameters("yes"),
+        "test_all_default_parameters_on_vercel",
+        answers=_generate_default_parameters("yes", "vercel"),
+        custom_check_args=[NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS],
+    )
+
+    assert response.returncode == 0, response.stdout
+
+
+def test_all_default_parameters_on_netlify(working_dir: Path) -> None:
+    response = run_init(
+        working_dir,
+        "test_all_default_parameters_on_netlify",
+        answers=_generate_default_parameters("yes", "netlify"),
         custom_check_args=[NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS],
     )
 

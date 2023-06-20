@@ -53,6 +53,16 @@ use_github_actions:
     help: Do you want to include Github Actions workflows for build validation?
     default: yes
 
+cloud_provider:
+    type: str
+    help: Pick your website hosting provider for continuous delivery
+    when: "{{ use_github_actions != false }}"
+    choices:
+        Netlify: "netlify"
+        Vercel: "vercel"
+        Skip CD setup: "none"
+    default: "netlify"
+
 # The following should never get prompted; algokit should always pass these values through by convention
 
 algod_token:

@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".vscode/**"
+      - ".idea/**"
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  lint-and-build:
+    name: CI dApp
+    uses: ./.github/workflows/checks.yaml
+    with:
+      run-build: true
+    
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Netlify
+    environment: Prod
+    concurrency: "${{ github.workflow }}-prod"
+    needs:
+      - lint-and-build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Install netlify cli
+        run: npm i netlify-cli
+
+      - name: Publish to netlify
+        run: netlify deploy --prod --dir "dist"
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+          # Pass your environment variables here, e.g.,
+          # VITE_ALGOD_NODE_CONFIG_TOKEN: ${{ secrets.VITE_ALGOD_NODE_CONFIG_TOKEN }}
+          # VITE_ALGOD_NODE_CONFIG_SERVER: ${{ secrets.VITE_ALGOD_NODE_CONFIG_SERVER }}
+          # VITE_ALGOD_NODE_CONFIG_PORT: ${{ secrets.VITE_ALGOD_NODE_CONFIG_PORT }}
+
+          # VITE_INDEXER_TOKEN: ${{ secrets.VITE_INDEXER_TOKEN }}
+          # VITE_INDEXER_SERVER: ${{ secrets.VITE_INDEXER_SERVER }}
+          # VITE_INDEXER_PORT: ${{ secrets.VITE_INDEXER_PORT }}
+
+          # VITE_ALGOD_NETWORK: ${{ secrets.VITE_ALGOD_NETWORK }}
+      
