@@ -2,6 +2,11 @@ name: Check code base
 
 on:
   workflow_call:
+    inputs:
+      run-build:
+        required: false
+        type: boolean
+        default: true
   push:
     branches:
       - main
@@ -30,4 +35,5 @@ jobs:
         run: npm run test
 
       - name: Build
+        if: ${{ inputs.run-build }}
         run: npm run build

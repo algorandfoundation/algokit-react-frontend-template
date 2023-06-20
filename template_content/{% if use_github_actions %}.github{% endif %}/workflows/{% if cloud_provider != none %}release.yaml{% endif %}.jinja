@@ -18,12 +18,16 @@ jobs:
   lint-and-build:
     name: CI Dapp
     uses: ./.github/workflows/checks.yml
+    {%- if cloud_provider == 'netlify' %}
+    with:
+      run-build: true
     steps:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
           name: dist
           path: dist/
+    {% endif %}
 
   deploy:
     runs-on: ubuntu-latest
@@ -36,13 +40,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+    {%- if cloud_provider == 'netlify' %}
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
+    {%- endif %}
 
-{%- if cloud_provider == 'vercel' %}
-  {% raw %}
+    {%- if cloud_provider == 'vercel' %}
+      {% raw %}
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
@@ -52,9 +58,9 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
         # Set your vercel project env variables on your site instance on https://vercel.com/dashboard
-  {% endraw %}
-{%- else %}
-  {% raw %}
+      {% endraw %}
+    {%- else %}
+      {% raw %}
       - name: Install netlify cli
         run: npm i netlify-cli
 
@@ -74,5 +80,5 @@ jobs:
           # VITE_INDEXER_PORT: ${{ secrets.VITE_INDEXER_PORT }}
 
           # VITE_ALGOD_NETWORK: ${{ secrets.VITE_ALGOD_NETWORK }}
-  {% endraw %}
-{%- endif %}
+      {% endraw %}
+    {%- endif %}
