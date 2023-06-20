@@ -18,12 +18,9 @@ jobs:
   lint-and-build:
     name: CI Dapp
     uses: ./.github/workflows/checks.yml
-    steps:
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist/
+    with:
+      run-build: true
+    
 
   deploy:
     runs-on: ubuntu-latest
@@ -35,12 +32,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
-  
+
       - name: Install netlify cli
         run: npm i netlify-cli
 
@@ -60,4 +57,4 @@ jobs:
           # VITE_INDEXER_PORT: ${{ secrets.VITE_INDEXER_PORT }}
 
           # VITE_ALGOD_NETWORK: ${{ secrets.VITE_ALGOD_NETWORK }}
-  
+      

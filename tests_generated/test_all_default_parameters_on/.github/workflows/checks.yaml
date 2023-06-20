@@ -2,6 +2,11 @@ name: Check code base
 
 on:
   workflow_call:
+    inputs:
+      run-build:
+        required: false
+        type: boolean
+        default: false
   push:
     branches:
       - main
@@ -30,4 +35,12 @@ jobs:
         run: npm run test
 
       - name: Build
+        if: ${{ inputs.run-build }}
         run: npm run build
+
+      - name: Archive
+        if: ${{ inputs.run-build }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/

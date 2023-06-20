@@ -6,7 +6,7 @@ on:
       run-build:
         required: false
         type: boolean
-        default: true
+        default: false
   push:
     branches:
       - main
@@ -37,3 +37,10 @@ jobs:
       - name: Build
         if: ${{ inputs.run-build }}
         run: npm run build
+
+      - name: Archive
+        if: ${{ inputs.run-build }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/
