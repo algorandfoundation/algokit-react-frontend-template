@@ -1,4 +1,4 @@
-# test_all_default_parameters_on
+# test_all_default_parameters_on_netlify
 
 This starter React project has been generated using AlgoKit. See below for default getting started instructions.
 

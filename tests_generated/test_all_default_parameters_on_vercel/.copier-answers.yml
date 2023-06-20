@@ -6,12 +6,12 @@ algod_server: http://localhost
 algod_token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 author_email: None
 author_name: None
-cloud_provider: netlify
+cloud_provider: vercel
 ide_vscode: true
 indexer_port: 8980
 indexer_server: http://localhost
 indexer_token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-project_name: test_all_default_parameters_on
+project_name: test_all_default_parameters_on_vercel
 use_daisy_ui: true
 use_eslint_prettier: true
 use_github_actions: true

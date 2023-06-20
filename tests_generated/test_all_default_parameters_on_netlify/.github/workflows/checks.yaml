@@ -26,7 +26,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run linters
         run: npm run lint
@@ -40,7 +40,7 @@ jobs:
 
       - name: Archive
         if: ${{ inputs.run-build }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist/
