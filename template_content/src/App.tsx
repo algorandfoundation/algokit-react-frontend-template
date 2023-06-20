@@ -1,9 +1,10 @@
-import { WalletProvider, useWallet } from '@txnlab/use-wallet'
+import { DEFAULT_NODE_BASEURL, DEFAULT_NODE_PORT, DEFAULT_NODE_TOKEN, WalletProvider, useWallet } from '@txnlab/use-wallet'
 import { SnackbarProvider } from 'notistack'
 import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
 import { useAlgoWallet } from './hooks/useAlgoWalletProvider'
+import { getAlgodConfigFromViteEnvironment } from './utils/network/getAlgodConfigFromViteEnvironment'
 
 export default function App() {
   const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
@@ -18,11 +19,13 @@ export default function App() {
     setOpenDemoModal(!openDemoModal)
   }
 
+  const algodConfig = getAlgodConfigFromViteEnvironment()
+
   const walletProviders = useAlgoWallet({
-    nodeToken: import.meta.env.VITE_ALGOD_NODE_CONFIG_TOKEN,
-    nodeServer: import.meta.env.VITE_ALGOD_NODE_CONFIG_SERVER,
-    nodePort: import.meta.env.VITE_ALGOD_NODE_CONFIG_PORT,
-    network: import.meta.env.VITE_ALGOD_NETWORK,
+    nodeToken: String(algodConfig.token) ?? DEFAULT_NODE_TOKEN,
+    nodeServer: algodConfig.server ?? DEFAULT_NODE_BASEURL,
+    nodePort: String(algodConfig.port) ?? DEFAULT_NODE_PORT,
+    network: algodConfig.network ?? '',
     autoConnect: true,
   })
 

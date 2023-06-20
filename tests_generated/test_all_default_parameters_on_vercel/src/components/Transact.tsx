@@ -1,8 +1,9 @@
-import { DEFAULT_NODE_BASEURL, DEFAULT_NODE_PORT, DEFAULT_NODE_TOKEN, useWallet } from '@txnlab/use-wallet'
 import * as algokit from '@algorandfoundation/algokit-utils'
-import { useState } from 'react'
+import { DEFAULT_NODE_BASEURL, DEFAULT_NODE_PORT, DEFAULT_NODE_TOKEN, useWallet } from '@txnlab/use-wallet'
 import algosdk from 'algosdk'
 import { useSnackbar } from 'notistack'
+import { useState } from 'react'
+import { getAlgodConfigFromViteEnvironment } from '../utils/network/getAlgodConfigFromViteEnvironment'
 
 interface TransactInterface {
   openModal: boolean
@@ -13,10 +14,11 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [receiverAddress, setReceiverAddress] = useState<string>('')
 
+  const algodConfig = getAlgodConfigFromViteEnvironment()
   const algodClient = algokit.getAlgoClient({
-    server: import.meta.env.VITE_ALGOD_NODE_CONFIG_SERVER ?? DEFAULT_NODE_BASEURL,
-    port: import.meta.env.VITE_ALGOD_NODE_CONFIG_PORT ?? DEFAULT_NODE_PORT,
-    token: import.meta.env.VITE_ALGOD_NODE_CONFIG_TOKEN ?? DEFAULT_NODE_TOKEN,
+    server: algodConfig.server ?? DEFAULT_NODE_BASEURL,
+    port: algodConfig.port ?? DEFAULT_NODE_PORT,
+    token: algodConfig.token ?? DEFAULT_NODE_TOKEN,
   })
 
   const { enqueueSnackbar } = useSnackbar()
