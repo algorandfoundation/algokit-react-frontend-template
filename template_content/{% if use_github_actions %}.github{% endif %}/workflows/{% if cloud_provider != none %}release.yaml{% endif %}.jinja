@@ -53,7 +53,7 @@ jobs:
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Replace template vars
-        uses: makerxstudio/shared-config/.github/actions/placeholders-to-secrets@main
+        uses: makerxstudio/shared-config/.github/actions/placeholder-transforms@main
         with:
           app-artifact-path: './.vercel/output'
           static-site-transforms: |-
@@ -79,7 +79,7 @@ jobs:
           path: dist
 
       - name: Replace template vars
-        uses: makerxstudio/shared-config/.github/actions/placeholders-to-secrets@main
+        uses: makerxstudio/shared-config/.github/actions/placeholder-transforms@main
         with:
           app-artifact-path: './dist'
           static-site-transforms: |-

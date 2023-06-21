@@ -40,7 +40,7 @@ jobs:
           path: dist
 
       - name: Replace template vars
-        uses: makerxstudio/shared-config/.github/actions/placeholders-to-secrets@main
+        uses: makerxstudio/shared-config/.github/actions/placeholder-transforms@main
         with:
           app-artifact-path: './dist'
           static-site-transforms: |-
