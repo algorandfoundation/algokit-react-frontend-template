@@ -4,6 +4,7 @@ import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
 import { useAlgoWallet } from './hooks/useAlgoWalletProvider'
+import { getAlgodConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
 
 export default function App() {
   const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
@@ -18,11 +19,13 @@ export default function App() {
     setOpenDemoModal(!openDemoModal)
   }
 
+  const algodConfig = getAlgodConfigFromViteEnvironment()
+
   const walletProviders = useAlgoWallet({
-    nodeToken: import.meta.env.VITE_ALGOD_NODE_CONFIG_TOKEN,
-    nodeServer: import.meta.env.VITE_ALGOD_NODE_CONFIG_SERVER,
-    nodePort: import.meta.env.VITE_ALGOD_NODE_CONFIG_PORT,
-    network: import.meta.env.VITE_ALGOD_NETWORK,
+    nodeToken: String(algodConfig.token),
+    nodeServer: algodConfig.server,
+    nodePort: String(algodConfig.port),
+    network: algodConfig.network,
     autoConnect: true,
   })
 
