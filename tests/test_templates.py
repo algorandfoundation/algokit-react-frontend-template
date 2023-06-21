@@ -51,7 +51,7 @@ def working_dir() -> Iterator[Path]:
         yield working_dir
 
         for src_dir in working_generated_root.iterdir():
-            if ".DS_Store" in src_dir.name:
+            if not src_dir.is_dir():
                 continue
 
             dest_dir = generated_root / src_dir.stem
