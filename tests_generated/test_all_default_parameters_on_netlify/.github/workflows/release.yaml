@@ -39,6 +39,20 @@ jobs:
           name: dist
           path: dist
 
+      - name: Replace template vars
+        uses: makerxstudio/shared-config/.github/actions/placeholders-to-secrets@main
+        with:
+          app-artifact-path: './dist'
+          static-site-transforms: |-
+            VITE_ALGOD_TOKEN:${{ secrets.VITE_ALGOD_TOKEN }}
+            VITE_ALGOD_SERVER:${{ vars.VITE_ALGOD_SERVER }}
+            VITE_ALGOD_PORT:${{ vars.VITE_ALGOD_PORT }}
+            VITE_ALGOD_NETWORK:${{ vars.VITE_ALGOD_NETWORK }}
+            VITE_INDEXER_SERVER:${{ vars.VITE_INDEXER_SERVER }}
+            VITE_INDEXER_PORT:${{ vars.VITE_INDEXER_PORT }}
+            VITE_INDEXER_TOKEN:${{ secrets.VITE_INDEXER_TOKEN }}
+            VITE_ENVIRONMENT:${{ vars.VITE_ENVIRONMENT }}
+
       - name: Install netlify cli
         run: npm i netlify-cli
 
@@ -47,15 +61,4 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-
-          # Pass your environment variables here, e.g.,
-          # VITE_ALGOD_NODE_CONFIG_TOKEN: ${{ secrets.VITE_ALGOD_NODE_CONFIG_TOKEN }}
-          # VITE_ALGOD_NODE_CONFIG_SERVER: ${{ secrets.VITE_ALGOD_NODE_CONFIG_SERVER }}
-          # VITE_ALGOD_NODE_CONFIG_PORT: ${{ secrets.VITE_ALGOD_NODE_CONFIG_PORT }}
-
-          # VITE_INDEXER_TOKEN: ${{ secrets.VITE_INDEXER_TOKEN }}
-          # VITE_INDEXER_SERVER: ${{ secrets.VITE_INDEXER_SERVER }}
-          # VITE_INDEXER_PORT: ${{ secrets.VITE_INDEXER_PORT }}
-
-          # VITE_ALGOD_NETWORK: ${{ secrets.VITE_ALGOD_NETWORK }}
       

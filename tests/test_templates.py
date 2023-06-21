@@ -51,6 +51,9 @@ def working_dir() -> Iterator[Path]:
         yield working_dir
 
         for src_dir in working_generated_root.iterdir():
+            if ".DS_Store" in src_dir.name:
+                continue
+
             dest_dir = generated_root / src_dir.stem
             shutil.rmtree(dest_dir, ignore_errors=True)
             shutil.copytree(src_dir, dest_dir, dirs_exist_ok=True)

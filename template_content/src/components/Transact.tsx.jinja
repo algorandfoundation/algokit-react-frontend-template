@@ -3,7 +3,7 @@ import { DEFAULT_NODE_BASEURL, DEFAULT_NODE_PORT, DEFAULT_NODE_TOKEN, useWallet 
 import algosdk from 'algosdk'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { getAlgodConfigFromViteEnvironment } from '../utils/network/getAlgodConfigFromViteEnvironment'
+import { getAlgodConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs'
 
 interface TransactInterface {
   openModal: boolean

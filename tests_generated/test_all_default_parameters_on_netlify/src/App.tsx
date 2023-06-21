@@ -4,7 +4,7 @@ import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
 import { useAlgoWallet } from './hooks/useAlgoWalletProvider'
-import { getAlgodConfigFromViteEnvironment } from './utils/network/getAlgodConfigFromViteEnvironment'
+import { getAlgodConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
 
 export default function App() {
   const [openWalletModal, setOpenWalletModal] = useState<boolean>(false)
