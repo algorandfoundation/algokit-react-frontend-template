@@ -1,5 +1,5 @@
 import * as algokit from '@algorandfoundation/algokit-utils'
-import { DEFAULT_NODE_BASEURL, DEFAULT_NODE_PORT, DEFAULT_NODE_TOKEN, useWallet } from '@txnlab/use-wallet'
+import { useWallet } from '@txnlab/use-wallet'
 import algosdk from 'algosdk'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
@@ -16,9 +16,9 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
 
   const algodConfig = getAlgodConfigFromViteEnvironment()
   const algodClient = algokit.getAlgoClient({
-    server: algodConfig.server ?? DEFAULT_NODE_BASEURL,
-    port: algodConfig.port ?? DEFAULT_NODE_PORT,
-    token: algodConfig.token ?? DEFAULT_NODE_TOKEN,
+    server: algodConfig.server,
+    port: algodConfig.port,
+    token: algodConfig.token,
   })
 
   const { enqueueSnackbar } = useSnackbar()

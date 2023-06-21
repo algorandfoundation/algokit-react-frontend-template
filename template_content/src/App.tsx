@@ -1,4 +1,4 @@
-import { DEFAULT_NODE_BASEURL, DEFAULT_NODE_PORT, DEFAULT_NODE_TOKEN, WalletProvider, useWallet } from '@txnlab/use-wallet'
+import { WalletProvider, useWallet } from '@txnlab/use-wallet'
 import { SnackbarProvider } from 'notistack'
 import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
@@ -22,10 +22,10 @@ export default function App() {
   const algodConfig = getAlgodConfigFromViteEnvironment()
 
   const walletProviders = useAlgoWallet({
-    nodeToken: String(algodConfig.token) ?? DEFAULT_NODE_TOKEN,
-    nodeServer: algodConfig.server ?? DEFAULT_NODE_BASEURL,
-    nodePort: String(algodConfig.port) ?? DEFAULT_NODE_PORT,
-    network: algodConfig.network ?? '',
+    nodeToken: String(algodConfig.token),
+    nodeServer: algodConfig.server,
+    nodePort: String(algodConfig.port),
+    network: algodConfig.network,
     autoConnect: true,
   })
 

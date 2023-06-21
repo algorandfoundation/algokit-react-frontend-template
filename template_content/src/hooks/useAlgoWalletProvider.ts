@@ -1,19 +1,6 @@
 import { DeflyWalletConnect } from '@blockshake/defly-connect'
 import { PeraWalletConnect } from '@perawallet/connect'
-import {
-  AlgodClientOptions,
-  DEFAULT_NETWORK,
-  DEFAULT_NODE_BASEURL,
-  DEFAULT_NODE_PORT,
-  DEFAULT_NODE_TOKEN,
-  defly,
-  exodus,
-  kmd,
-  pera,
-  PROVIDER_ID,
-  reconnectProviders,
-  WalletClient,
-} from '@txnlab/use-wallet'
+import { AlgodClientOptions, defly, exodus, kmd, pera, PROVIDER_ID, reconnectProviders, WalletClient } from '@txnlab/use-wallet'
 import algosdk from 'algosdk'
 import { useEffect } from 'react'
 
@@ -37,12 +24,9 @@ if (import.meta.env.VITE_ENVIRONMENT === 'local') {
 const walletProviders: SupportedProviders = {}
 
 export function useAlgoWallet(context: { autoConnect: boolean; network: string; nodeServer: string; nodePort: string; nodeToken: string }) {
-  const algodOptions = [
-    context.nodeToken ?? DEFAULT_NODE_TOKEN,
-    context.nodeServer ?? DEFAULT_NODE_BASEURL,
-    context.nodePort ?? DEFAULT_NODE_PORT,
-  ] as AlgodClientOptions
-  const network = context.network ?? DEFAULT_NETWORK
+  const algodOptions = [context.nodeToken, context.nodeServer, context.nodePort] as AlgodClientOptions
+
+  const network = context.network
 
   providerIds.forEach((id) => {
     if (id in walletProviders) {
