@@ -67,6 +67,7 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
         <br />
         <input
           type="text"
+          data-test-id="receiver-address"
           placeholder="Provide wallet address"
           className="input input-bordered w-full"
           value={receiverAddress}
@@ -78,7 +79,11 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
           <button className="btn" onClick={() => setModalState(!openModal)}>
             Close
           </button>
-          <button className={`btn ${receiverAddress.length === 58 ? '' : 'btn-disabled'} lo`} onClick={handleSubmitAlgo}>
+          <button
+            data-test-id="send-algo"
+            className={`btn ${receiverAddress.length === 58 ? '' : 'btn-disabled'} lo`}
+            onClick={handleSubmitAlgo}
+          >
             {loading ? <span className="loading loading-spinner" /> : 'Send 1 Algo'}
           </button>
         </div>

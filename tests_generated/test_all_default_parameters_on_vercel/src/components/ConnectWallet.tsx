@@ -44,6 +44,7 @@ const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
 
         <div className="modal-action ">
           <button
+            data-test-id="close-wallet-modal"
             className="btn"
             onClick={() => {
               closeModal()
@@ -54,6 +55,7 @@ const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
           {activeAddress && (
             <button
               className="btn btn-warning"
+              data-test-id="logout"
               onClick={() => {
                 providers?.find((p) => p.isActive)?.disconnect()
               }}
