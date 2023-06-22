@@ -7,6 +7,9 @@
     "dbaeumer.vscode-eslint",
     "krysenlo.vite-plugin-eslint-problemmatcher",
     {% endif -%}
+    {% if use_playwright -%}
+    "ms-playwright.playwright",
+    {% endif -%}
     {% if use_tailwind -%}
     "bradlc.vscode-tailwindcss",
     "csstools.postcss",
