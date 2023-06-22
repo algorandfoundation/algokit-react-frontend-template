@@ -1,7 +1,7 @@
 {
   "recommendations": [
     "EditorConfig.EditorConfig",
-    "dotenv.dotenv-vscode"
+    "dotenv.dotenv-vscode",
     {% if use_eslint_prettier -%}
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
@@ -9,6 +9,9 @@
     {% endif -%}
     {% if use_playwright -%}
     "ms-playwright.playwright",
+    {% endif -%}
+    {% if use_jest -%}
+    "Orta.vscode-jest",
     {% endif -%}
     {% if use_tailwind -%}
     "bradlc.vscode-tailwindcss",
