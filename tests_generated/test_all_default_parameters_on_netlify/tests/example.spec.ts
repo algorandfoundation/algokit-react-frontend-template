@@ -30,9 +30,9 @@ test('authentication and dummy payment transaction', async ({ page }) => {
   const dummyAccount = generateAccount()
   await page.getByTestId('receiver-address').fill(dummyAccount.addr)
   await page.getByTestId('send-algo').click()
-  await page.waitForTimeout(5000)
 
   // 3. Must be able to see a notification that the transaction was sent
   const notificiation = await page.getByText('Transaction sent:')
+  await notificiation.waitFor()
   expect(notificiation).toBeTruthy()
 })
