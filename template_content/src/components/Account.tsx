@@ -10,7 +10,9 @@ const Account = () => {
       <a
         className="text-xl"
         target="_blank"
-        href={`https://${algoConfig.network == 'mainnet' ? '' : `${algoConfig.network}.`}algoexplorer.io/address/${activeAddress}`}
+        href={`https://${
+          ['mainnet', ''].includes(algoConfig.network.toLowerCase()) ? '' : `${algoConfig.network.toLowerCase()}.`
+        }algoexplorer.io/address/${activeAddress}`}
       >
         Address: {ellipseAddress(activeAddress)}
       </a>

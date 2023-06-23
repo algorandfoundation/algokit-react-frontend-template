@@ -58,7 +58,7 @@ export default function App() {
                 </button>
 
                 {activeAddress && (
-                  <button className="btn m-2" onClick={toggleDemoModal}>
+                  <button data-test-id="transactions-demo" className="btn m-2" onClick={toggleDemoModal}>
                     Transactions Demo
                   </button>
                 )}
