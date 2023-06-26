@@ -6,9 +6,11 @@ import { getAlgodConfigFromViteEnvironment } from '../utils/network/getAlgoClien
 const Account = () => {
   const { activeAddress } = useWallet()
   const algoConfig = getAlgodConfigFromViteEnvironment()
+
   const dappFlowNetworkName = useMemo(() => {
     return algoConfig.network === '' ? 'sandbox' : algoConfig.network.toLocaleLowerCase()
-  }, [])
+  }, [algoConfig.network])
+
   return (
     <div>
       <a
