@@ -16,7 +16,7 @@ type SupportedProviders = Partial<{
 }>
 
 let providerIds: PROVIDER_ID[] = []
-if (import.meta.env.VITE_ENVIRONMENT === 'local') {
+if (import.meta.env.VITE_ALGOD_NETWORK === '') {
   providerIds.push(PROVIDER_ID.KMD)
 } else {
   providerIds = [PROVIDER_ID.PERA, PROVIDER_ID.DEFLY, PROVIDER_ID.EXODUS]
@@ -61,7 +61,7 @@ export function useAlgoWallet(context: { autoConnect: boolean; network: string; 
           break
 
         default:
-          if (import.meta.env.VITE_ENVIRONMENT === 'local') {
+          if (import.meta.env.VITE_ALGOD_NETWORK === '') {
             walletProviders[PROVIDER_ID.KMD] = kmd.init({
               algosdkStatic: algosdk,
               algodOptions: algodOptions,
