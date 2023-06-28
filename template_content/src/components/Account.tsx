@@ -20,7 +20,7 @@ const Account = () => {
       >
         Address: {ellipseAddress(activeAddress)}
       </a>
-      <div className="text-xl">Network: {algoConfig.network}</div>
+      <div className="text-xl">Network: {algoConfig.network === '' ? 'localnet' : algoConfig.network}</div>
     </div>
   )
 }
