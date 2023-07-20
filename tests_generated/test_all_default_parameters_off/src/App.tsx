@@ -7,11 +7,23 @@ import { SnackbarProvider } from 'notistack'
 import { useState } from 'react'
 import ConnectWallet from './components/ConnectWallet'
 import Transact from './components/Transact'
-import { getAlgodConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
+import { getAlgodConfigFromViteEnvironment, getKmdConfigFromViteEnvironment } from './utils/network/getAlgoClientConfigs'
 
 let providersArray: ProvidersArray
 if (import.meta.env.VITE_ALGOD_NETWORK === '') {
-  providersArray = [{ id: PROVIDER_ID.KMD }]
+  const kmdConfig = getKmdConfigFromViteEnvironment()
+  providersArray = [
+    {
+      id: PROVIDER_ID.KMD,
+      clientOptions: {
+        wallet: kmdConfig.wallet,
+        password: kmdConfig.password,
+        host: kmdConfig.server,
+        token: String(kmdConfig.token),
+        port: String(kmdConfig.port),
+      },
+    },
+  ]
 } else {
   providersArray = [
     { id: PROVIDER_ID.DEFLY, clientStatic: DeflyWalletConnect },
