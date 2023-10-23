@@ -21,12 +21,15 @@ NPM_BUILD_ARGS = ["npm", "run", "build"]
 
 
 def _generate_default_parameters(
-    default_state: str = "yes", cloud_provider: str = "none"
+    default_state: str = "yes",
+    cloud_provider: str = "none",
+    ide_jetbrains: str = "no",
 ) -> dict[str, str]:
     return {
         "author_name": "None",
         "author_email": "None",
         "ide_vscode": default_state,
+        "ide_jetbrains": ide_jetbrains,
         "use_eslint_prettier": default_state,
         "use_tailwind": default_state,
         "use_daisy_ui": default_state,
@@ -139,6 +142,21 @@ def run_init(
     # remove node_modules
     shutil.rmtree(copy_to / "node_modules", ignore_errors=True)
 
+    # Check if .idea folder exists and if so modify os specific SDK_HOME path
+    idea_folder = copy_to / ".idea"
+    if idea_folder.exists():
+        # Iterate over all files in .idea/runConfigurations
+        for file in (idea_folder / "runConfigurations").iterdir():
+            # Read the file content
+            content = file.read_text()
+            # Replace the line containing SDK_HOME
+            content = re.sub(
+                r'<option name="SDK_HOME" value=".*" />',
+                '<option name="SDK_HOME" value="$PROJECT_DIR$/.venv/bin/python" />',
+                content,
+            )
+            # Write the modified content back to the file
+            file.write_text(content)
     return result
 
 
@@ -169,6 +187,17 @@ def test_all_default_parameters_off(working_dir: Path) -> None:
         working_dir,
         "test_all_default_parameters_off",
         answers=_generate_default_parameters("no"),
+        custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
+    )
+
+    assert response.returncode == 0, response.stdout
+
+
+def test_all_default_parameters_off_jetbrains(working_dir: Path) -> None:
+    response = run_init(
+        working_dir,
+        "test_all_default_parameters_jetbrains",
+        answers=_generate_default_parameters("no", ide_jetbrains="yes"),
         custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
     )
 

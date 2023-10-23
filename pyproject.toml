@@ -7,8 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-beaker-pyteal = "^1.0.0"
-algokit-utils = {version = "^1.2.0b8", allow-prereleases = true}
+beaker-pyteal = "^1.1.1"
+algokit-utils = {version = "^2.1.0", allow-prereleases = true}
 python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -19,6 +19,7 @@ pytest = "^7.2.2"
 mypy = "^1.1.1"
 pre-commit = "^3.2.1"
 types-pyyaml = "^6.0.12.9"
+pytest-xdist = "^3.3.1"
 
 [build-system]
 requires = ["poetry-core"]
