@@ -21,12 +21,13 @@ NPM_BUILD_ARGS = ["npm", "run", "build"]
 
 
 def _generate_default_parameters(
-    default_state: str = "yes", cloud_provider: str = "none"
+    default_state: str = "yes", cloud_provider: str = "none", ide_jetbrains: str = "no",
 ) -> dict[str, str]:
     return {
         "author_name": "None",
         "author_email": "None",
         "ide_vscode": default_state,
+        "ide_jetbrains": ide_jetbrains,
         "use_eslint_prettier": default_state,
         "use_tailwind": default_state,
         "use_daisy_ui": default_state,
@@ -185,6 +186,17 @@ def test_all_default_parameters_off(working_dir: Path) -> None:
         "test_all_default_parameters_off",
         answers=_generate_default_parameters("no"),
         custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
+    )
+
+    assert response.returncode == 0, response.stdout
+
+
+def test_all_default_parameters_off_jetbrains(working_dir: Path) -> None:
+    response = run_init(
+      working_dir,
+      "test_all_default_parameters_off",
+      answers=_generate_default_parameters("no", ide_jetbrains="yes"),
+      custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
     )
 
     assert response.returncode == 0, response.stdout
