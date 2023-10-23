@@ -24,7 +24,7 @@ ide_vscode:
 
 ide_jetbrains:
   type: bool
-  help: Do you want to add JetBrains configuration (primarily optimized for PyCharm CE and WebStorm)?
+  help: Do you want to add JetBrains configuration (primarily optimized for WebStorm)?
   when: "{{ ide_vscode == false }}"
   default: no
 
