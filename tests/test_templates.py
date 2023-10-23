@@ -196,7 +196,7 @@ def test_all_default_parameters_off(working_dir: Path) -> None:
 def test_all_default_parameters_off_jetbrains(working_dir: Path) -> None:
     response = run_init(
         working_dir,
-        "test_all_default_parameters_off",
+        "test_all_default_parameters_jetbrains",
         answers=_generate_default_parameters("no", ide_jetbrains="yes"),
         custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
     )
