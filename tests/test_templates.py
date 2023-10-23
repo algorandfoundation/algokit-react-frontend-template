@@ -139,6 +139,21 @@ def run_init(
     # remove node_modules
     shutil.rmtree(copy_to / "node_modules", ignore_errors=True)
 
+    # Check if .idea folder exists and if so modify os specific SDK_HOME path
+    idea_folder = copy_to / ".idea"
+    if idea_folder.exists():
+        # Iterate over all files in .idea/runConfigurations
+        for file in (idea_folder / "runConfigurations").iterdir():
+            # Read the file content
+            content = file.read_text()
+            # Replace the line containing SDK_HOME
+            content = re.sub(
+                r'<option name="SDK_HOME" value=".*" />',
+                '<option name="SDK_HOME" value="$PROJECT_DIR$/.venv/bin/python" />',
+                content,
+            )
+            # Write the modified content back to the file
+            file.write_text(content)
     return result
 
 

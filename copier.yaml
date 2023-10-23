@@ -22,6 +22,12 @@ ide_vscode:
     help: Do you want to add VSCode configuration?
     default: yes
 
+ide_jetbrains:
+  type: bool
+  help: Do you want to add JetBrains configuration (primarily optimized for PyCharm CE and WebStorm)?
+  when: "{{ ide_vscode == false }}"
+  default: no
+
 use_eslint_prettier:
     type: bool
     help: Do you want to use ESLint and Prettier for code linting and formatting?
