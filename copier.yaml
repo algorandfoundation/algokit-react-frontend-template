@@ -28,10 +28,16 @@ ide_jetbrains:
   when: '{{ ide_vscode == false }}'
   default: no
 
+tealscript:
+  type: bool
+  help: Do you want to write contracts with TEALScript?
+  default: yes
+
 use_eslint_prettier:
   type: bool
   help: Do you want to use ESLint and Prettier for code linting and formatting?
   default: yes
+  when: '{{ tealscript == false }}'
 
 use_tailwind:
   type: bool

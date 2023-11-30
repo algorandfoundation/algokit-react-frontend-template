@@ -23,5 +23,23 @@
             }
         ],
         "prefer-template": "error"
+    },
+    "overrides": [
+      {
+      "files": [
+        "*.algo.ts"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": "off",
+        "object-shorthand": "off",
+        "class-methods-use-this": "off",
+        "no-undef": "off",
+        "max-classes-per-file": "off",
+        "no-bitwise": "off",
+        "operator-assignment": "off",
+        "prefer-template": "off",
+        "prefer-destructuring": "off"
+      }
     }
+  ]
 }
