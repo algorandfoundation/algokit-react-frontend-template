@@ -45,7 +45,26 @@ For pull requests and pushes to `main` branch against this repository the follow
 
 The project template provides base Github Actions workflows for continuous deployment to [Netlify](https://www.netlify.com/) or [Vercel](https://vercel.com/). These workflows are located in the [`.github/workflows`](./.github/workflows) folder.
 
-> Please note: when configuring the github repository for the first time. Depending on selected provider you will need to set the provider secrets in the repository settings. For netlify you can pass the project specific environment variables as part of Github actions secrets, while for vercel you will need to set the secrets on your site instance (refer to the [Vercel documentation](https://vercel.com/docs/cli#commands/secrets) for more details).
+**Please note**: when configuring the github repository for the first time. Depending on selected provider you will need to set the provider secrets in the repository settings. Default setup provided by the template allows you to manage the secrets via environment variables and secrets on your github repository.
+
+
+#### Setting up environment variables and secrets for webapp deployment
+
+1. [Create a new environment variable on your repository](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository) called `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` if you are using Netlify as your cloud provider. Set it to the value of your Netlify auth token respectively. You can find your Netlify auth token by going to [app.netlify.com](https://app.netlify.com/).
+2. If you are using Vercel as your cloud provider, create a new environment variable on your repository called `VERCEL_TOKEN`. Set it to the value of your Vercel auth token. You can find your Vercel auth token by going to [vercel.com/account/tokens](https://vercel.com/account/tokens).
+3. Set environment variables similarly to step one for the following variables (see .env.template for default values):
+    - VITE_ALGOD_SERVER
+    - VITE_ALGOD_PORT
+    - VITE_ALGOD_NETWORK
+    - VITE_INDEXER_SERVER
+    - VITE_INDEXER_PORT
+    - VITE_ENVIRONMENT
+4. (Optional) [Set environment secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) for the following variables (see .env.template for default values):
+    - VITE_ALGOD_TOKEN
+    - VITE_INDEXER_TOKEN
+
+> If you prefer alternative deployment methods, you can remove the relevant workflow files from the [`.github/workflows`](./.github/workflows) folder and configure your own.
+
 
 # Algorand Wallet integrations
 
@@ -79,4 +98,3 @@ It has also been configured to have a productive dev experience out of the box i
 # Integrating with smart contracts and application clients
 
 Refer to the detailed guidance on [integrating with smart contracts and application clients](./src/contracts/README.md). In essence, for any smart contract codebase generated with AlgoKit or other tools that produce compile contracts into ARC34 compliant app specifications, you can use the `algokit generate` command to generate TypeScript or Python typed client. Once generated simply drag and drop the generated client into `./src/contracts` and import it into your React components as you see fit.
-

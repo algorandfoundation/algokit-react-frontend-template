@@ -30,12 +30,12 @@ jobs:
 
       - name: Run linters
         run: npm run lint
-
+      {% if use_jest %}
       - name: Run unit tests
         run: npm run test
-
+      {% endif %}
       - name: Create placeholder .env file
-        if: ${{ inputs.run-build }}
+        if: ${{ '{{' }} inputs.run-build {{ '}}' }}
         uses: makerxstudio/shared-config/.github/actions/env-to-placeholders@main
         with:
           env-output-path: './.env'
@@ -43,11 +43,11 @@ jobs:
           env-variable-prefix: VITE_
 
       - name: Build
-        if: ${{ inputs.run-build }}
+        if: ${{ '{{' }} inputs.run-build {{ '}}' }}
         run: npm run build
 
       - name: Archive
-        if: ${{ inputs.run-build }}
+        if: ${{ '{{' }} inputs.run-build {{ '}}' }}
         uses: actions/upload-artifact@v3
         with:
           name: dist
