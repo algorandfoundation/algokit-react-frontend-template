@@ -52,16 +52,16 @@ The project template provides base Github Actions workflows for continuous deplo
 
 1. [Create a new environment variable on your repository](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository) called `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` if you are using Netlify as your cloud provider. Set it to the value of your Netlify auth token respectively. You can find your Netlify auth token by going to [app.netlify.com](https://app.netlify.com/).
 2. If you are using Vercel as your cloud provider, create a new environment variable on your repository called `VERCEL_TOKEN`. Set it to the value of your Vercel auth token. You can find your Vercel auth token by going to [vercel.com/account/tokens](https://vercel.com/account/tokens).
-3. Set environment variables similarly to step one for the following variables (see .env.template for default values):
-    - VITE_ALGOD_SERVER
-    - VITE_ALGOD_PORT
-    - VITE_ALGOD_NETWORK
-    - VITE_INDEXER_SERVER
-    - VITE_INDEXER_PORT
-    - VITE_ENVIRONMENT
-4. (Optional) [Set environment secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) for the following variables (see .env.template for default values):
-    - VITE_ALGOD_TOKEN
-    - VITE_INDEXER_TOKEN
+3. Set up the environment variables. You can refer to the `.env.template` for default values. The variables to be set are:
+    - `VITE_ALGOD_SERVER`
+    - `VITE_ALGOD_NETWORK`
+    - `VITE_INDEXER_SERVER`
+    - `VITE_ENVIRONMENT` - (Set to either `production` or `development`)
+    - `VITE_ALGOD_PORT` - (This is optional if you are using a public gateway like AlgoNode)
+    - `VITE_INDEXER_PORT` - (This is optional if you are using a public gateway like AlgoNode)
+4. (Optional) If you need to set up environment secrets, you can do so by following the guide [here](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository). The variables for which you can set secrets are (refer to `.env.template` for default values):
+    - `VITE_ALGOD_TOKEN` - (This is optional if you are using a public gateway like AlgoNode)
+    - `VITE_INDEXER_TOKEN` - (This is optional if you are using a public gateway like AlgoNode)
 
 > If you prefer alternative deployment methods, you can remove the relevant workflow files from the [`.github/workflows`](./.github/workflows) folder and configure your own.
 
