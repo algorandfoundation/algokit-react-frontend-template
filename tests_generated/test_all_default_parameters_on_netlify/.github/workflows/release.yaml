@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths-ignore:
-      - "docs/**"
-      - "**.md"
-      - ".vscode/**"
-      - ".idea/**"
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
 
 permissions:
   contents: read
@@ -20,21 +20,20 @@ jobs:
     uses: ./.github/workflows/checks.yaml
     with:
       run-build: true
-    
 
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to Netlify
     environment: Prod
-    concurrency: "${{ github.workflow }}-prod"
+    concurrency: '${{ github.workflow }}-prod'
     needs:
       - lint-and-build
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
@@ -62,4 +61,3 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           # Set your netlify project env variables on your github repository (see README for more info)
-      
