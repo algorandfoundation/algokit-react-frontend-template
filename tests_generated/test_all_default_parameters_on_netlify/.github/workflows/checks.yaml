@@ -30,10 +30,10 @@ jobs:
 
       - name: Run linters
         run: npm run lint
-
+      
       - name: Run unit tests
         run: npm run test
-
+      
       - name: Create placeholder .env file
         if: ${{ inputs.run-build }}
         uses: makerxstudio/shared-config/.github/actions/env-to-placeholders@main
