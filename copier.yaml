@@ -17,57 +17,72 @@ author_email:
   help: Package author email
   placeholder: 'your@email.tld'
 
+preset_name:
+  type: str
+  help: Name of the preset to use. Starter is optimal for simpler projects, Production is optimal for more complex projects that require CI/CD and other features, Custom for user-defined settings.
+  choices:
+    Starter: 'starter'
+    Production: 'production'
+    Custom: 'custom'
+  default: 'starter'
+
 ide_vscode:
   type: bool
   help: Do you want to add VSCode configuration?
-  default: yes
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 ide_jetbrains:
   type: bool
   help: Do you want to add JetBrains configuration (primarily optimized for WebStorm)?
-  when: '{{ ide_vscode == false }}'
-  default: no
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 use_eslint_prettier:
   type: bool
   help: Do you want to use ESLint and Prettier for code linting and formatting?
-  default: yes
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 use_tailwind:
   type: bool
   help: Do you want to use Tailwind CSS? A utility-first CSS framework for rapidly building custom designs.
-  default: yes
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 use_daisy_ui:
   type: bool
-  help: Do you want to use a daisyUI? Framework agnostic CSS component library for building modern websites and web applications fast.
-  default: yes
-  when: '{{ use_tailwind != false }}'
+  help: Do you want to use daisyUI? Framework agnostic CSS component library for building modern websites and web applications fast.
+  when: "{{ use_tailwind != false and preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 use_jest:
   type: bool
   help: Do you want to include unit tests (via Jest)?
-  default: yes
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 use_playwright:
   type: bool
   help: Do you want to include end to end tests (via Playwright)?
-  default: yes
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 use_github_actions:
   type: bool
   help: Do you want to include Github Actions workflows for build validation?
-  default: yes
+  when: "{{ preset_name == 'custom' }}"
+  default: "{{ 'yes' if preset_name == 'production' else 'no' }}"
 
 cloud_provider:
   type: str
   help: Pick your website hosting provider for continuous delivery
-  when: '{{ use_github_actions != false }}'
+  when: "{{ use_github_actions != false and preset_name == 'custom' }}"
   choices:
     Netlify: 'netlify'
     Vercel: 'vercel'
     Skip CD setup: 'none'
-  default: 'netlify'
+  default: "{{ 'netlify' if preset_name == 'production' else 'none' }}"
 
 # The following should never get prompted; algokit should always pass these values through by convention
 
