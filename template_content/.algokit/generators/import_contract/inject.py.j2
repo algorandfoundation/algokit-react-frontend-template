@@ -3,11 +3,13 @@ import os
 from pathlib import Path
 import shutil
 
+
+ROOT_DIR = Path.cwd()
+CONTRACTS_DIR = ROOT_DIR.parent.parent / 'client' / '{{ contract_name }}-contracts'
+SITES_DIR = ROOT_DIR.parent.parent / 'sites' / '{{ contract_name }}-app'
 TYPED_CLIENT_LINKING_COMMAND = {
-    "generate:app-clients": "algokit generate client -o src/contracts/{contract_name}.ts ../backend"  # noqa: E501
+    "generate:app-clients": "algokit generate client -o src/contracts/{contract_name}.ts {CONTRACTS_DIR}"  # noqa: E501
 }
-ROOT_DIR = os.getcwd()
-CONTRACT_DIR = ROOT_DIR.parent.parent / 'client' / {{ contract_name }}
 
 def modify_scripts(scripts, new_script, specified_commands):
     """Modifies the existing scripts to run the new script first."""
@@ -103,13 +105,13 @@ if __name__ == "__main__":
         source_file = os.path.join(inject_folder_path, file)
 
         if file == "Home.tsx":
-            dest_file = os.path.join(CONTRACT_DIR, "src", file)
+            dest_file = os.path.join(SITES_DIR, "src", file)
             inject_file(source_file, dest_file)
         if file == "AppCalls.tsx":
-            dest_file = os.path.join(CONTRACT_DIR, "src", "components", file)
+            dest_file = os.path.join(SITES_DIR, "src", "components", file)
             inject_file(source_file, dest_file)
         if file == "README.md":
-            dest_file = os.path.join(CONTRACT_DIR, "src", "contracts", file)
+            dest_file = os.path.join(SITES_DIR, "src", "contracts", file)
             inject_file(source_file, dest_file)
 
         delete_file(source_file)
