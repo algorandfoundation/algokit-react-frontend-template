@@ -1,0 +1,11 @@
+_tasks:
+  - '{{ python_path if python_path else _copier_python }} inject.py'
+  - "echo '==== Successfully imported latest typed client from {{ contract_name }} 🚀 ===='"
+
+contract_name:
+  type: str
+  help: Pick the contract project that exports the client
+  placeholder: 'my-new-contract'
+  default: 'my-new-contract'
+
+_templates_suffix: '.j2'
