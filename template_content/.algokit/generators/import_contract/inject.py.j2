@@ -8,7 +8,7 @@ ROOT_DIR = Path.cwd()
 CONTRACTS_DIR = ROOT_DIR.parent.parent / 'client' / '{{ contract_name }}-contracts'
 SITES_DIR = ROOT_DIR.parent.parent / 'sites' / '{{ contract_name }}-app'
 TYPED_CLIENT_LINKING_COMMAND = {
-    "generate:app-clients": "algokit generate client -o src/contracts/{contract_name}.ts {CONTRACTS_DIR}"  # noqa: E501
+    "generate:app-clients": "algokit generate client -o src/contracts/{contract_name}.ts " + CONTRACTS_DIR  # noqa: E501
 }
 
 def modify_scripts(scripts, new_script, specified_commands):
