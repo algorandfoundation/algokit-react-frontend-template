@@ -5,8 +5,8 @@ import shutil
 
 
 ROOT_DIR = Path.cwd()
-CONTRACTS_DIR = ROOT_DIR.parent.parent / 'contracts' / '{{ contract_name }}-contracts'
-SITES_DIR = ROOT_DIR.parent.parent / 'sites' / '{{ contract_name }}-app'
+CONTRACTS_DIR = ROOT_DIR.parent.parent / 'src' / '{{ contract_name }}-contracts'
+SITES_DIR = ROOT_DIR.parent.parent / 'src' / '{{ contract_name }}-app'
 TYPED_CLIENT_LINKING_COMMAND = {
     "generate:app-clients": "algokit generate client -o src/contracts/{contract_name}.ts " + str(CONTRACTS_DIR)  # noqa: E501
 }
