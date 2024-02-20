@@ -11,8 +11,7 @@ commit_pattern = re.compile(r"_commit: .*")
 src_path_pattern = re.compile(r"_src_path: .*")
 tests_path = Path(__file__).parent
 root = tests_path.parent
-generated_folder = "examples"
-misc_folder = "misc"  # for any non default tests for
+generated_folder = "examples/misc"
 # specific answer combination
 generated_root = root / generated_folder
 
@@ -154,13 +153,17 @@ def run_init(
     return result
 
 
-@pytest.mark.parametrize("preset_name", ["starter", "production"])
-def test_react_templates(working_dir: Path, preset_name: str) -> None:
+# Below places the artifacts to examples/misc folder to separate from default
+# preset tests
+@pytest.mark.parametrize("cloud_provider", ["vercel", "netlify"])
+def test_production_react_cloud(working_dir: Path, cloud_provider: str) -> None:
     response = run_init(
         working_dir,
-        f"{preset_name}_react",
-        answers=_generate_default_parameters(preset_name=preset_name),
-        custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
+        f"production_react_{cloud_provider}",
+        answers=_generate_default_parameters(
+            preset_name="production", cloud_provider=cloud_provider
+        ),
+        custom_check_args=[NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS],
     )
 
     assert response.returncode == 0, response.stdout
