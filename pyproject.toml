@@ -43,8 +43,8 @@ select = [
   "I",
 ]
 extend-exclude = [
-  "tests_generated/*python_linter-flake8",
-  "tests_generated/*python_linter-none",
+  "examples/*python_linter-flake8",
+  "examples/*python_linter-none",
   "template_content",
 ]
 ignore = [
