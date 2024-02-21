@@ -78,7 +78,7 @@ use_github_actions:
 cloud_provider:
   type: str
   help: Pick your website hosting provider for continuous delivery
-  when: "{{ use_github_actions != false and preset_name == 'custom' }}"
+  when: '{{ use_github_actions != false }}'
   choices:
     Netlify: 'netlify'
     Vercel: 'vercel'

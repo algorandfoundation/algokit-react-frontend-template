@@ -11,7 +11,7 @@ commit_pattern = re.compile(r"_commit: .*")
 src_path_pattern = re.compile(r"_src_path: .*")
 tests_path = Path(__file__).parent
 root = tests_path.parent
-generated_folder = "examples/misc"
+generated_folder = "examples/cloud_provider"
 # specific answer combination
 generated_root = root / generated_folder
 
