@@ -12,7 +12,6 @@ src_path_pattern = re.compile(r"_src_path: .*")
 tests_path = Path(__file__).parent
 root = tests_path.parent
 generated_folder = "examples"
-misc_folder = "misc"  # for any non default tests for
 # specific answer combination
 generated_root = root / generated_folder
 
