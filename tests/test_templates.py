@@ -11,7 +11,8 @@ commit_pattern = re.compile(r"_commit: .*")
 src_path_pattern = re.compile(r"_src_path: .*")
 tests_path = Path(__file__).parent
 root = tests_path.parent
-generated_folder = "tests_generated"
+generated_folder = "examples"
+# specific answer combination
 generated_root = root / generated_folder
 
 config_path = Path(__file__).parent.parent / "pyproject.toml"
@@ -21,37 +22,29 @@ NPM_BUILD_ARGS = ["npm", "run", "build"]
 
 
 def _generate_default_parameters(
-    default_state: str = "yes",
-    cloud_provider: str = "none",
-    ide_jetbrains: str = "no",
+    *, preset_name: str, cloud_provider: str = "none"
 ) -> dict[str, str]:
     return {
         "author_name": "None",
         "author_email": "None",
-        "ide_vscode": default_state,
-        "ide_jetbrains": ide_jetbrains,
-        "use_eslint_prettier": default_state,
-        "use_tailwind": default_state,
-        "use_daisy_ui": default_state,
-        "use_jest": default_state,
-        "use_playwright": default_state,
-        "use_github_actions": default_state,
+        "preset_name": preset_name,
         "cloud_provider": cloud_provider,
     }
 
 
 @pytest.fixture(autouse=True, scope="module")
-def working_dir() -> Iterator[Path]:
+def working_dir(custom_subdir: str = "template") -> Iterator[Path]:
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp:
-        working_dir = Path(temp) / "template"
-        working_generated_root = working_dir / generated_folder
-        shutil.copytree(root, working_dir)
-        subprocess.run(["git", "add", "-A"], cwd=working_dir)
+        working_dir_path = Path(temp) / custom_subdir
+        working_generated_root = working_dir_path / generated_folder
+        shutil.copytree(root, working_dir_path)
+        subprocess.run(["git", "add", "-A"], cwd=working_dir_path)
         subprocess.run(
-            ["git", "commit", "-m", "draft changes", "--no-verify"], cwd=working_dir
+            ["git", "commit", "-m", "draft changes", "--no-verify"],
+            cwd=working_dir_path,
         )
 
-        yield working_dir
+        yield working_dir_path
 
         for src_dir in working_generated_root.iterdir():
             if not src_dir.is_dir():
@@ -97,9 +90,9 @@ def run_init(
         "--no-ide",
         "--no-git",
         "--no-bootstrap",
+        "--no-workspace",
     ]
     answers = {
-        **_generate_default_parameters("yes"),
         **(answers or {}),
     }
 
@@ -160,44 +153,12 @@ def run_init(
     return result
 
 
-def test_all_default_parameters_on_vercel(working_dir: Path) -> None:
+@pytest.mark.parametrize("preset_name", ["starter", "production"])
+def test_react_templates(working_dir: Path, preset_name: str) -> None:
     response = run_init(
         working_dir,
-        "test_all_default_parameters_on_vercel",
-        answers=_generate_default_parameters("yes", "vercel"),
-        custom_check_args=[NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS],
-    )
-
-    assert response.returncode == 0, response.stdout
-
-
-def test_all_default_parameters_on_netlify(working_dir: Path) -> None:
-    response = run_init(
-        working_dir,
-        "test_all_default_parameters_on_netlify",
-        answers=_generate_default_parameters("yes", "netlify"),
-        custom_check_args=[NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS],
-    )
-
-    assert response.returncode == 0, response.stdout
-
-
-def test_all_default_parameters_off(working_dir: Path) -> None:
-    response = run_init(
-        working_dir,
-        "test_all_default_parameters_off",
-        answers=_generate_default_parameters("no"),
-        custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
-    )
-
-    assert response.returncode == 0, response.stdout
-
-
-def test_all_default_parameters_off_jetbrains(working_dir: Path) -> None:
-    response = run_init(
-        working_dir,
-        "test_all_default_parameters_jetbrains",
-        answers=_generate_default_parameters("no", ide_jetbrains="yes"),
+        f"{preset_name}_react",
+        answers=_generate_default_parameters(preset_name=preset_name),
         custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
     )
 
