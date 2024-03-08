@@ -68,6 +68,11 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     {% endif -%}
+    {% if cloud_provider == 'vercel' -%}
+    "ci:vercel:build": "vercel build --prod --token=$VERCEL_TOKEN",
+    "ci:vercel:pull": "vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+    "ci:vercel:deploy": "npm run ci:vercel:build && vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN",
+    {% endif -%}
     "preview": "vite preview"
   },
   "eslintConfig": {
