@@ -7,4 +7,9 @@ path = ".algokit/generators/import_contract"
 
 [project]
 type = "frontend"
-name = "starter_react"
+name = 'starter_react'
+artifacts = "src/contracts"
+
+[project.run]
+build = { commands = ['npm run build'], description = 'Build frontend' }
+test = { commands = ['npm run test'], description = 'Run frontend tests' }

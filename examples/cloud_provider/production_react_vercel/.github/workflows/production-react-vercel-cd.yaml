@@ -1,0 +1,55 @@
+name: Release production_react_vercel
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".vscode/**"
+      - ".idea/**"
+  
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  validate:
+    name: Validate production_react_vercel
+    uses: ./.github/workflows/production-react-vercel-ci.yaml
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Vercel
+    environment: frontend-prod
+    
+    needs:
+      - validate
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install algokit
+        run: pipx install git+https://github.com/algorandfoundation/algokit-cli@feat/orchestration-linking
+
+      - name: Bootstrap dependencies
+        run: algokit bootstrap all --project-name 'production_react_vercel'
+    
+      - name: Publish to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        run: |
+          npm install --global vercel@canary
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod
+          vercel deploy --prebuilt --prod
+    
