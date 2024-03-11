@@ -4,8 +4,10 @@ The following folder is reserved for the Algorand Application Clients. The clien
 
 To integrate this react frontend template with your smart contracts codebase, perform the following steps:
 
-1. Generate the typed client using `algokit generate client -l typescript -o {path/to/this/folder}`
+1. Generate the typed client using `algokit generate client -l typescript -o {path/to/this/folder}` or using a dedicated `link` command `algokit project link` (ensure to invoke it from the root of this react project). Using the `link` command is especially useful within workspaces that have multiple contract projects.
 2. The generated typescript client should be ready to be imported and used in this react frontend template, making it a full fledged dApp.
+
+> Please note, by default template defines `"generate:app-clients": "algokit project link --all"` which is a shortcut to automatically export TEAL code from all `contract` projects in the workspace as typed clients to the `frontend` project invoking the `link` command.
 
 ### FAQ
 
