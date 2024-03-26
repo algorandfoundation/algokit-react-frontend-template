@@ -16,9 +16,9 @@ generated_folder = "examples"
 generated_root = root / generated_folder
 
 config_path = Path(__file__).parent.parent / "pyproject.toml"
-NPM_INSTALL_ARGS = ["npm", "install"]
-NPM_LINT_ARGS = ["npm", "run", "lint"]
-NPM_BUILD_ARGS = ["npm", "run", "build"]
+LINT_ARGS = ["algokit", "project", "run", "lint"]
+BUILD_ARGS = ["algokit", "project", "run", "build"]
+TEST_ARGS = ["algokit", "project", "run", "test"]
 
 
 def _generate_default_parameters(
@@ -89,7 +89,6 @@ def run_init(
         "--defaults",
         "--no-ide",
         "--no-git",
-        "--no-bootstrap",
         "--no-workspace",
     ]
     answers = {
@@ -155,11 +154,16 @@ def run_init(
 
 @pytest.mark.parametrize("preset_name", ["starter", "production"])
 def test_react_templates(working_dir: Path, preset_name: str) -> None:
+    custom_check_args = [BUILD_ARGS]
+
+    if preset_name == "production":
+        custom_check_args += [TEST_ARGS, LINT_ARGS]
+
     response = run_init(
         working_dir,
         f"{preset_name}_react",
         answers=_generate_default_parameters(preset_name=preset_name),
-        custom_check_args=[NPM_INSTALL_ARGS, NPM_BUILD_ARGS],
+        custom_check_args=custom_check_args,
     )
 
     assert response.returncode == 0, response.stdout

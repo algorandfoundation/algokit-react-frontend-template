@@ -16,9 +16,9 @@ generated_folder = "examples/cloud_provider"
 generated_root = root / generated_folder
 
 config_path = Path(__file__).parent.parent / "pyproject.toml"
-NPM_INSTALL_ARGS = ["npm", "install"]
-NPM_LINT_ARGS = ["npm", "run", "lint"]
-NPM_BUILD_ARGS = ["npm", "run", "build"]
+LINT_ARGS = ["algokit", "project", "run", "lint"]
+BUILD_ARGS = ["algokit", "project", "run", "build"]
+TEST_ARGS = ["algokit", "project", "run", "test"]
 
 
 def _generate_default_parameters(
@@ -89,7 +89,6 @@ def run_init(
         "--defaults",
         "--no-ide",
         "--no-git",
-        "--no-bootstrap",
         "--no-workspace",
     ]
     answers = {
@@ -157,13 +156,14 @@ def run_init(
 # preset tests
 @pytest.mark.parametrize("cloud_provider", ["vercel", "netlify"])
 def test_production_react_cloud(working_dir: Path, cloud_provider: str) -> None:
+
     response = run_init(
         working_dir,
         f"production_react_{cloud_provider}",
         answers=_generate_default_parameters(
             preset_name="production", cloud_provider=cloud_provider
         ),
-        custom_check_args=[NPM_INSTALL_ARGS, NPM_LINT_ARGS, NPM_BUILD_ARGS],
+        custom_check_args=[BUILD_ARGS, TEST_ARGS, LINT_ARGS],
     )
 
     assert response.returncode == 0, response.stdout
