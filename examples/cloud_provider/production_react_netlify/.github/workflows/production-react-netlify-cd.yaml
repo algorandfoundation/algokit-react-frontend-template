@@ -1,0 +1,53 @@
+name: Release production_react_netlify
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".vscode/**"
+      - ".idea/**"
+  
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  validate:
+    name: Validate production_react_netlify
+    uses: ./.github/workflows/production-react-netlify-ci.yaml
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Netlify
+    environment: frontend-prod
+    
+    needs:
+      - validate
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install algokit
+        run: pipx install algokit
+
+      - name: Bootstrap dependencies
+        run: algokit bootstrap all --project-name 'production_react_netlify'
+    
+      - name: Publish to Netlify
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          npm install --global netlify-cli@latest
+          netlify login
+          netlify deploy --build --prod
+    

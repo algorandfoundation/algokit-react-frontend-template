@@ -33,13 +33,15 @@ This starter React project has been generated using AlgoKit. See below for defau
 
 ### Continuous Integration
 
-This project uses [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to define CI workflows, which are located in the [`.github/workflows`](./.github/workflows) folder.
+This project uses [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions) to define CI workflows, which are located in the [.github/workflows](`.github/workflows`) folder.
 
 For pull requests and pushes to `main` branch against this repository the following checks are automatically performed by GitHub Actions:
 
 - `install`: Installs dependencies using `npm`
 - `lint`: Lints the codebase using `ESLint`
 - `build`: Builds the codebase using `vite`
+
+> Please note, if you instantiated the project via `algokit init` without explicitly specifying the `--no-workspace` flag, we will automatically attempt to move the contents of the `.github` folder to the root of the workspace.
 
 ### Continuous Deployment
 
@@ -50,20 +52,24 @@ The project template provides base Github Actions workflows for continuous deplo
 
 #### Setting up environment variables and secrets for webapp deployment
 
-1. [Create a new environment variable on your repository](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository) called `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` if you are using Netlify as your cloud provider. Set it to the value of your Netlify auth token respectively. You can find your Netlify auth token by going to [app.netlify.com](https://app.netlify.com/).
-2. If you are using Vercel as your cloud provider, create a new environment variable on your repository called `VERCEL_TOKEN`. Set it to the value of your Vercel auth token. You can find your Vercel auth token by going to [vercel.com/account/tokens](https://vercel.com/account/tokens).
-3. Set up the environment variables. You can refer to the `.env.template` for default values. The variables to be set are:
-    - `VITE_ALGOD_SERVER`
-    - `VITE_ALGOD_NETWORK`
-    - `VITE_INDEXER_SERVER`
-    - `VITE_ENVIRONMENT` - (Set to either `production` or `development`)
-    - `VITE_ALGOD_PORT` - (This is optional if you are using a public gateway like AlgoNode)
-    - `VITE_INDEXER_PORT` - (This is optional if you are using a public gateway like AlgoNode)
-4. (Optional) If you need to set up environment secrets, you can do so by following the guide [here](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository). The variables for which you can set secrets are (refer to `.env.template` for default values):
-    - `VITE_ALGOD_TOKEN` - (This is optional if you are using a public gateway like AlgoNode)
-    - `VITE_INDEXER_TOKEN` - (This is optional if you are using a public gateway like AlgoNode)
+For Vercel:
+1. Retrieve your [Vercel Access Token](https://vercel.com/support/articles/how-do-i-use-a-vercel-api-access-token)
+2. Install the [Vercel CLI](https://vercel.com/cli) and run `vercel login`
+3. Inside your folder, run `vercel link` to create a new Vercel project
+4. Inside the generated `.vercel` folder, save the `projectId` and `orgId` from the `project.json`
+5. Inside GitHub, add `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+6. Create an .env file containing ENV vars for the project (pointing to testnet or mainnet), drag and drop the .env file to upload initial batch of default environment variables to your vercel project.
+7. Upon invocation, CD pipeline will pull the VITE_ prefixed environment variables, build the project and deploy to the specified environment.
 
-> If you prefer alternative deployment methods, you can remove the relevant workflow files from the [`.github/workflows`](./.github/workflows) folder and configure your own.
+For Netlify:
+1. Retrieve your [Netlify Access Token](https://docs.netlify.com/cli/get-started/#obtain-a-token-in-the-netlify-ui)
+2. Inside your folder run `netlify login`
+3. Inside your folder run `netlify sites:create` to create a new site, obtain NETLIFY_SITE_ID from the output
+4. Inside GitHub, add `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+5. Define the VITE_ prefixed environment variables in netlify environment variables under site settings.
+6. Upon invocation, CD pipeline will build the project and deploy to the specified environment.
+
+> If you prefer alternative deployment methods, you can modify the relevant workflow files from the [`.github/workflows`](./.github/workflows) folder or modify deploy scripts in `.algokit.toml`.
 
 
 # Algorand Wallet integrations
