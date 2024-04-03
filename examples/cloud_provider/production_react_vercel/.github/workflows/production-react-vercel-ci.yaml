@@ -33,7 +33,7 @@ jobs:
         run: pipx install algokit
 
       - name: Install dependencies
-        run: algokit bootstrap all --project-name 'production_react_vercel'
+        run: algokit project bootstrap all --project-name 'production_react_vercel'
 
       
       - name: Run linters
