@@ -35,7 +35,7 @@ jobs:
         run: pipx install algokit
 
       - name: Install dependencies
-        run: algokit bootstrap all --project-name '{{ project_name }}'
+        run: algokit project bootstrap all --project-name '{{ project_name }}'
 
       {% if use_eslint_prettier %}
       - name: Run linters
