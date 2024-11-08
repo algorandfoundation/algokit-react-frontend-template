@@ -12,18 +12,18 @@
     "npm": ">=9.0"
   },
   "devDependencies": {
-    "@algorandfoundation/algokit-client-generator": "^3.0.3",
+    "@algorandfoundation/algokit-client-generator": "v4.0.0-beta.8",
     "@types/node": "^18.17.14",
     "@types/react": "^18.2.11",
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.14",
     {% if use_eslint_prettier -%}
-    "eslint": "^8.42.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.5.0",
-    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     {% endif -%}
     {% if use_tailwind -%}
     "postcss": "^8.4.24",
@@ -39,15 +39,15 @@
     "@playwright/test": "^1.35.0",
     "playwright": "^1.35.0",
     {% endif -%}
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
   "dependencies": {
-    "@walletconnect/modal-sign-html": "^2.6.1",
-    "@algorandfoundation/algokit-utils": "^6.0.2",
+    "@algorandfoundation/algokit-utils": "7.0.0-beta.22",
     "@blockshake/defly-connect": "^1.1.6",
     "@daffiwallet/connect": "^1.0.3",
-    "@perawallet/connect": "^1.3.1",
-    "@txnlab/use-wallet": "^2.4.0",
+    "@perawallet/connect": "^1.3.4",
+    "@txnlab/use-wallet": "^2.8.2",
     "algosdk": "^2.7.0",
     {% if use_daisy_ui -%}
     "daisyui": "^4.0.0",
@@ -97,5 +97,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "ws@>7.0.0 <7.5.9": "7.5.10"
   }
 }
