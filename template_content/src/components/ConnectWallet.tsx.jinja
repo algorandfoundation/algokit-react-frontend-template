@@ -38,7 +38,7 @@ const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
                   <img
                     alt={`wallet_icon_${wallet.id}`}
                     src={wallet.metadata.icon}
-                    style={{ objectFit: 'contain', width: '30px', height: 'auto' }}
+                    style={{ '{{' }} objectFit: 'contain', width: '30px', height: 'auto' {{ '}}' }}
                   />
                 )}
                 <span>{isKmd(wallet) ? 'LocalNet Wallet' : wallet.metadata.name}</span>
