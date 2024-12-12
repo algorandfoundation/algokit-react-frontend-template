@@ -33,16 +33,16 @@ jobs:
         run: pipx install algokit
 
       - name: Install dependencies
-        run: algokit project bootstrap all --project-name 'production_react'
+        run: algokit project bootstrap all 
 
       
       - name: Run linters
-        run: algokit project run lint --project-name 'production_react'
+        run: algokit project run lint 
       
       
       - name: Run unit tests
-        run: algokit project run test --project-name 'production_react'
+        run: algokit project run test 
       
 
       - name: Build
-        run: algokit project run build --project-name 'production_react'
+        run: algokit project run build 

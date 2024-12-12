@@ -45,7 +45,7 @@ jobs:
         run: pipx install algokit
 
       - name: Bootstrap dependencies
-        run: algokit project bootstrap all --project-name '{{ project_name }}'
+        run: algokit project bootstrap all {% if use_workspace %}--project-name '{{ project_name }}'{% endif %}
     {% if cloud_provider == 'vercel' %}
       - name: Publish to Vercel
         env:
