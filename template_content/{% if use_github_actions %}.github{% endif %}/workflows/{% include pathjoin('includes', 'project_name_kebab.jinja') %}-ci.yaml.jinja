@@ -35,16 +35,16 @@ jobs:
         run: pipx install algokit
 
       - name: Install dependencies
-        run: algokit project bootstrap all --project-name '{{ project_name }}'
+        run: algokit project bootstrap all {% if use_workspace %}--project-name '{{ project_name }}'{% endif %}
 
       {% if use_eslint_prettier %}
       - name: Run linters
-        run: algokit project run lint --project-name '{{ project_name }}'
+        run: algokit project run lint {% if use_workspace %}--project-name '{{ project_name }}'{% endif %}
       {% endif %}
       {% if use_jest %}
       - name: Run unit tests
-        run: algokit project run test --project-name '{{ project_name }}'
+        run: algokit project run test {% if use_workspace %}--project-name '{{ project_name }}'{% endif %}
       {% endif %}
 
       - name: Build
-        run: algokit project run build --project-name '{{ project_name }}'
+        run: algokit project run build {% if use_workspace %}--project-name '{{ project_name }}'{% endif %}
