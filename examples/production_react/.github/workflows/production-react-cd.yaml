@@ -40,5 +40,5 @@ jobs:
         run: pipx install algokit
 
       - name: Bootstrap dependencies
-        run: algokit project bootstrap all --project-name 'production_react'
+        run: algokit project bootstrap all 
     
