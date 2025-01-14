@@ -42,6 +42,9 @@ export default function App() {
         },
       },
     },
+    options: {
+      resetNetwork: true,
+    },
   })
 
   return (
