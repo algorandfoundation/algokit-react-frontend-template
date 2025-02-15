@@ -34,7 +34,6 @@ export default function App() {
     defaultNetwork: algodConfig.network,
     networks: {
       [algodConfig.network]: {
-        name: algodConfig.network,
         algod: {
           baseServer: algodConfig.server,
           port: algodConfig.port,
