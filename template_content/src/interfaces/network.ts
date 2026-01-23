@@ -1,4 +1,4 @@
-import { AlgoClientConfig } from '@algorandfoundation/algokit-utils/types/network-client'
+import { AlgoClientConfig } from '@algorandfoundation/algokit-utils/network-client'
 
 export interface AlgoViteClientConfig extends AlgoClientConfig {
   /** Base URL of the server e.g. http://localhost, https://testnet-api.algonode.cloud/, etc. */
