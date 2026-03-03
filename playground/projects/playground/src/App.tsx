@@ -21,10 +21,6 @@ if (import.meta.env.VITE_ALGOD_NETWORK === 'localnet') {
     { id: WalletId.DEFLY },
     { id: WalletId.PERA },
     { id: WalletId.EXODUS },
-    {
-      id: WalletId.WEB3AUTH,
-      options: { clientId: import.meta.env.VITE_WEB3AUTH_CLIENT_ID, web3AuthNetwork: import.meta.env.VITE_WEB3AUTH_NETWORK },
-    },
     // If you are interested in WalletConnect v2 provider
     // refer to https://github.com/TxnLab/use-wallet for detailed integration instructions
   ]
