@@ -16,6 +16,8 @@ generated_folder = "examples"
 generated_root = root / generated_folder
 
 config_path = Path(__file__).parent.parent / "pyproject.toml"
+JS_PKG_MGR_ARGS = ["algokit", "config", "js-package-manager", "npm"]
+BOOTSTRAP_ARGS = ["algokit", "project", "bootstrap", "all", "--no-ci"]
 LINT_ARGS = ["algokit", "project", "run", "lint"]
 BUILD_ARGS = ["algokit", "project", "run", "build"]
 TEST_ARGS = ["algokit", "project", "run", "test"]
@@ -154,7 +156,7 @@ def run_init(
 
 @pytest.mark.parametrize("preset_name", ["starter", "production"])
 def test_react_templates(working_dir: Path, preset_name: str) -> None:
-    custom_check_args = [BUILD_ARGS]
+    custom_check_args = [JS_PKG_MGR_ARGS, BOOTSTRAP_ARGS, BUILD_ARGS]
 
     if preset_name == "production":
         custom_check_args += [TEST_ARGS, LINT_ARGS]
